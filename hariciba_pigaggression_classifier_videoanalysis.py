@@ -7,20 +7,18 @@ import cv2
 
 start_time = time.time()
 
-# Some variables
 fps = 25.0
-aggression_threshold = 0.9  # Default: 0.5
+aggression_threshold = 0.5  # Default: 0.5
 predict_test_count, aggressive_count, nonaggressive_count, error_count = 0, 0, 0, 0
 agg_avg_prob, nonagg_avg_prob, combined_avg_prob, test_nonagg, test_agg = 0, 0, 0, 0, 0
 file_name_iterator, prediction_labels_iterator = 0, 0
 file_names, prediction_labels = [], ["placeholder"]
 label, file_names_clip = "", ""
-pred_dir = 'C:\\Users\\Harry\\PigAggressionData\\pig_behaviour_classifier_datasets_test_prev'
-model_dir = "classification_checkpoints\\Pig_Behaviour_Classifier_ID_blend_prev\\checkpoints\\cp-35.hdf5"
+pred_dir = 'C:\\Users\\Harry\\PigAggressionData\\pig_behaviour_classifier_datasets_test\\'
+model_dir = "classification_checkpoints\\Pig_Behaviour_Classifier_ID_7142\\checkpoints\\cp-326.hdf5"
 
 model = keras.models.load_model(model_dir, compile=True)
 
-# Rescale images (same as training)
 image_rescaler = ImageDataGenerator(rescale=1./255)
 
 test_data_gen = image_rescaler.flow_from_directory(pred_dir,
@@ -30,14 +28,12 @@ test_data_gen = image_rescaler.flow_from_directory(pred_dir,
                                                    class_mode=None,
                                                    color_mode='grayscale')
 
-# Generate predictions (0-1)
 probabilities = model.predict(test_data_gen)
 probabilities = np.reshape(probabilities, -1)
 
 for name in test_data_gen.filenames:
     file_names.append(name)
 
-# Use threshold to classify predictions (Aggressive - Non-aggressive)
 for i in probabilities:
     file_name = file_names[file_name_iterator]
     if i >= aggression_threshold:
@@ -59,7 +55,6 @@ for i in probabilities:
 prediction_labels.pop(0)
 print("Number of prediction labels: " + str(len(prediction_labels)))
 
-# Pre-smoothing results
 aggressive_percentage = round((aggressive_count / (aggressive_count + nonaggressive_count)) * 100)
 nonaggressive_percentage = 100 - aggressive_percentage
 agg_avg_prob_percent = int(round(agg_avg_prob / aggressive_count, 2) * 100)
@@ -74,7 +69,6 @@ print("Aggressive average probability: " + str(agg_avg_prob_percent))
 print("Nonaggressive average probability: " + str(nonagg_avg_prob_percent))
 print("Combined average probability: " + str(combined_average_probability) + '\n')
 
-# Optional smoothing element (set threshold to 0 to turn off)
 smooth_threshold = 1
 prediction_labels_temp, probabilities_temp = [], []
 prediction_label_counter = 0
@@ -108,7 +102,6 @@ else:
 prediction_labels = prediction_labels_temp
 print("Number of updated prediction labels: " + str(len(prediction_labels)))
 
-# Calculate individual subclass results
 TP, TN, FP, FN = 0, 0, 0, 0
 subclasses = {"headbiting": 0, "parallelpressing": 0, "inverseparallelpressing": 0, "chasing": 0,
               "headtoheadknocking": 0, "headtobodyknocking": 0, "mounting": 0, "mobile": 0, "immobile": 0}
@@ -167,7 +160,6 @@ UPMCC = round((mcc_numerator / mcc_denominator), 4)
 UPEVALLIST = "Accuracy:" + UPACC + "%, " + "TPR:" + UPTPR + "%, " + "TNR:" + UPTNR + "%, " + \
              "PPV:" + UPPPV + "%, " + "NPV:" + UPNPV + "%, " + "F1:" + str(UPF1) + "%, F2:" + str(UPF2) + "%, MCC:" + str(UPMCC)
 
-# Print updated results
 print("Updated TP: " + str(TP))
 print("Updated FP: " + str(FP))
 print("Updated TN: " + str(TN))
@@ -192,15 +184,13 @@ percentage_nonagg_annotated = str(int((round((test_nonagg / annotated_total), 2)
 print("Number of aggressive frames (updated): " + str(test_agg))
 print("Number of nonaggressive frames (updated): " + str(test_nonagg) + "\n")
 
-# Initialize video output generator
-pathOut = 'C:\\Users\\Harry\\PigAggressionData\\prediction_videos\\Prediction_Video_New.mp4'
+pathOut = 'C:\\Users\\Harry\\PigAggressionData\\prediction_videos\\Prediction_Video.mp4'
 size = 1088, 612
 out = cv2.VideoWriter(pathOut, cv2.VideoWriter_fourcc(*'mp4v'), fps, size)
 
-# Build video output
 images, file_names_list, output_image_list = [], [], []
 file_count = 0
-for file_name in os.listdir('C:\\Users\\Harry\\PigAggressionData\\extracted_frames_test_new'):
+for file_name in os.listdir('C:\\Users\\Harry\\PigAggressionData\\extracted_frames_test_natural'):
     file_names_list.append(file_name)
 print("Number of raw frames: " + str(len(file_names_list)) + "\n")
 font = cv2.FONT_HERSHEY_DUPLEX
@@ -209,7 +199,7 @@ font_size_big = 0.8
 for i in file_names_list:
     prediction_label = prediction_labels[prediction_labels_iterator]
     file_name_index = file_names_list.index(i)
-    img = cv2.imread(os.path.join('C:\\Users\\Harry\\PigAggressionData\\extracted_frames_test_new', i))
+    img = cv2.imread(os.path.join('C:\\Users\\Harry\\PigAggressionData\\extracted_frames_test_natural', i))
     img = cv2.putText(img,
                       str(i),
                       (5, 30),

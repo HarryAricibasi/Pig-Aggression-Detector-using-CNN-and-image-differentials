@@ -4,19 +4,20 @@ import numpy as np
 import os
 import time
 import cv2
+import csv
 
 start_time = time.time()
 
 # Some variables
 fps = 25.0
-aggression_threshold = 0.9  # Default: 0.5
+aggression_threshold = 0.5  # Default: 0.5
 predict_test_count, aggressive_count, nonaggressive_count, error_count = 0, 0, 0, 0
 agg_avg_prob, nonagg_avg_prob, combined_avg_prob, test_nonagg, test_agg = 0, 0, 0, 0, 0
 file_name_iterator, prediction_labels_iterator = 0, 0
 file_names, prediction_labels = [], ["placeholder"]
 label, file_names_clip = "", ""
-pred_dir = 'C:\\Users\\Harry\\PigAggressionData\\pig_behaviour_classifier_datasets_test_prev'
-model_dir = "classification_checkpoints\\Pig_Behaviour_Classifier_ID_blend_prev\\checkpoints\\cp-35.hdf5"
+pred_dir = 'C:\\Users\\Harry\\PigAggressionData\\pig_behaviour_classifier_datasets_test_new'
+model_dir = "classification_checkpoints\\Pig_Behaviour_Classifier_ID_blend_new_stack_csv\\checkpoints\\cp-34.hdf5"
 
 model = keras.models.load_model(model_dir, compile=True)
 
@@ -192,123 +193,15 @@ percentage_nonagg_annotated = str(int((round((test_nonagg / annotated_total), 2)
 print("Number of aggressive frames (updated): " + str(test_agg))
 print("Number of nonaggressive frames (updated): " + str(test_nonagg) + "\n")
 
-# Initialize video output generator
-pathOut = 'C:\\Users\\Harry\\PigAggressionData\\prediction_videos\\Prediction_Video_New.mp4'
-size = 1088, 612
-out = cv2.VideoWriter(pathOut, cv2.VideoWriter_fourcc(*'mp4v'), fps, size)
+#fields1 = ['frame', "label"]
+#rows1 = [file_names, prediction_labels]
 
-# Build video output
-images, file_names_list, output_image_list = [], [], []
-file_count = 0
-for file_name in os.listdir('C:\\Users\\Harry\\PigAggressionData\\extracted_frames_test_new'):
-    file_names_list.append(file_name)
-print("Number of raw frames: " + str(len(file_names_list)) + "\n")
-font = cv2.FONT_HERSHEY_DUPLEX
-font_size_main = 0.5
-font_size_big = 0.8
-for i in file_names_list:
-    prediction_label = prediction_labels[prediction_labels_iterator]
-    file_name_index = file_names_list.index(i)
-    img = cv2.imread(os.path.join('C:\\Users\\Harry\\PigAggressionData\\extracted_frames_test_new', i))
-    img = cv2.putText(img,
-                      str(i),
-                      (5, 30),
-                      fontScale=font_size_main,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    img = cv2.putText(img,
-                      "Threshold:" + str(int(aggression_threshold * 100)) + "%",
-                      (350, 100),
-                      fontScale=font_size_big,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    img = cv2.putText(img,
-                      "Interval:" + str(smooth_threshold),
-                      (550, 100),
-                      fontScale=font_size_big,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    img = cv2.putText(img,
-                      str(UPEVALLIST),
-                      (5, 460),
-                      fontScale=font_size_main,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    img = cv2.putText(img,
-                      "Behaviour-> Aggressive:" + percentage_agg_annotated + ", Non-Aggressive:" + percentage_nonagg_annotated,
-                      (5, 495),
-                      fontScale=font_size_main,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    img = cv2.putText(img,
-                      "Avg. Probability-> Aggressive:" + str(agg_avg_prob_percent) + "%" +
-                      ", Non-Aggressive:" + str(nonagg_avg_prob_percent) + "%",
-                      (5, 530),
-                      fontScale=font_size_main,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    img = cv2.putText(img,
-                      "Non-Aggressive:" + str(subclasses_true_1),
-                      (5, 590),
-                      fontScale=0.4,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    img = cv2.putText(img,
-                      "Aggressive:" + str(subclasses_true_2),
-                      (5, 565),
-                      fontScale=0.4,
-                      fontFace=font,
-                      color=(255, 255, 255))
-    if probabilities[file_name_index] >= aggression_threshold:
-        prob_color = (15, 15, 255)
-    else:
-        prob_color = (20, 255, 20)
-    img = cv2.putText(img,
-                      str(int(round(probabilities[file_name_index], 2) * 100)) + "%",
-                      (350, 65),
-                      fontScale=font_size_big,
-                      fontFace=font,
-                      color=prob_color)
-    if prediction_label == "Aggressive":
-        img = cv2.putText(img,
-                          str(prediction_label),
-                          (5, 65),
-                          fontScale=font_size_big,
-                          fontFace=font,
-                          color=(15, 15, 255))
-    elif prediction_label == "Non-Aggressive":
-        img = cv2.putText(img,
-                          str(prediction_label),
-                          (5, 65),
-                          fontScale=font_size_big,
-                          fontFace=font,
-                          color=(20, 255, 20))
-    else:
-        pass
-    if "non" in i:
-        img = cv2.putText(img,
-                          "Actual: Non-Aggressive",
-                          (5, 100),
-                          fontScale=font_size_big,
-                          fontFace=font,
-                          color=(20, 255, 20))
-    elif "agg" in i:
-        img = cv2.putText(img,
-                          "Actual: Aggressive",
-                          (5, 100),
-                          fontScale=font_size_big,
-                          fontFace=font,
-                          color=(15, 15, 255))
-    else:
-        pass
-    out.write(img)
-    prediction_labels_iterator += 1
-    if prediction_labels_iterator > 15000:
-        break
-    else:
-        pass
-
-out.release()
+print(prediction_labels)
+with open('videooutput.csv', 'w', newline="") as f:
+    write = csv.writer(f)
+    for item in prediction_labels:
+        write.writerow([item])
+    #write.writerows(prediction_labels)
 
 end_time = time.time()
 print("Time taken to run script: " + str(end_time - start_time))
