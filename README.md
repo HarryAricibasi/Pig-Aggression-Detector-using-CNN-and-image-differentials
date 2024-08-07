@@ -44,6 +44,8 @@ To design and implement a deep learning model capable of identifying and classif
 - **Libraries**: TensorFlow/Keras for deep learning, OpenCV for image processing
 - **Environment**: Jupyter Notebooks, Google Colab, or local Python environment
 
+![image](https://github.com/HarryAricibasi/HarryAricibasi/blob/e56d7bdeeabec9cf474d4e7a39558fc9d664b2ca/images/PARTscreenshot.PNG)
+
 #### Results
 The use of CNNs combined with image differentials has proven to be an effective and computationally efficient method for detecting aggressive behaviors in pigs. The proposed system can be integrated into real-time monitoring systems to improve animal welfare and productivity in swine farming operations.
 Developed Pig Aggression Recognition Tool (PART) for end users. Through a simple and easy interface, anyone can classify Pig Aggression reliably for research purposes.
