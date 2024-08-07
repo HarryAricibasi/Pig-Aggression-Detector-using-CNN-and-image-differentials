@@ -1,5 +1,5 @@
 # Pig-Aggression-Detector-using-CNN-and-Image-Differentials
-![image](https://user-images.githubusercontent.com/81607668/127727120-a11f32fa-3042-4773-b54e-fd1a792fff2f.png)
+![image](https://github.com/HarryAricibasi/HarryAricibasi/blob/e56d7bdeeabec9cf474d4e7a39558fc9d664b2ca/images/pigpggressionexample1.png)
 
 #### Background
 Pig aggression poses a significant challenge in the swine industry, affecting both animal welfare and productivity. This project aims to develop an automated system for detecting aggressive behaviors in pigs using video footage and deep learning techniques. By employing convolutional neural networks (CNN) and image differentials, we strive to improve the welfare of group-housed pigs and enhance overall farm efficiency.
@@ -46,6 +46,7 @@ To design and implement a deep learning model capable of identifying and classif
 
 #### Results
 The use of CNNs combined with image differentials has proven to be an effective and computationally efficient method for detecting aggressive behaviors in pigs. The proposed system can be integrated into real-time monitoring systems to improve animal welfare and productivity in swine farming operations.
+Developed Pig Aggression Recognition Tool (PART) for end users. Through a simple and easy interface, anyone can classify Pig Aggression reliably for research purposes.
 
 #### Future Work
 - **Dataset Expansion**: Incorporate more varied datasets with different pig breeds and environments.
@@ -53,6 +54,4 @@ The use of CNNs combined with image differentials has proven to be an effective 
 - **Real-time Deployment**: Develop and deploy a user-friendly application for farm integration.
 
 #### Links
-- [Medium: Detecting Aggression in Pigs Using Deep Learning](https://medium.com/analytics-vidhya/detecting-aggression-in-pigs-using-deep-learning)
-- [Kaggle: Pig Aggression Detection Challenge](https://www.kaggle.com/harryaricibasi/pig-aggression-detection)
-
+- [A computer vision image differential approach for automatic detection of aggressive behavior in pigs using deep learning](https://doi.org/10.1093/jas/skad347)
