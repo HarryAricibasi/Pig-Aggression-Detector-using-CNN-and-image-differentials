@@ -1,25 +1,58 @@
-# Pig-Aggression-Detector-using-CNN-and-image-differentials
+# Pig-Aggression-Detector-using-CNN-and-Image-Differentials
 ![image](https://user-images.githubusercontent.com/81607668/127727120-a11f32fa-3042-4773-b54e-fd1a792fff2f.png)
 
 #### Background
-Super Store is a small retail business located in the United States. They sell Furniture, Office Supplies and Technology products and their customers are the mass Consumer, Corporate and Home Offices. The data set contains sales, profit and geographical information of individual orders.
+Pig aggression poses a significant challenge in the swine industry, affecting both animal welfare and productivity. This project aims to develop an automated system for detecting aggressive behaviors in pigs using video footage and deep learning techniques. By employing convolutional neural networks (CNN) and image differentials, we strive to improve the welfare of group-housed pigs and enhance overall farm efficiency.
 
-#### Business Task
-Analyse sales data and determine weak areas and opportunities to boost business growth.
+#### Project Objective
+To design and implement a deep learning model capable of identifying and classifying aggressive behaviors in pigs from video recordings. The goal is to provide a real-time, efficient solution for monitoring and managing pig behavior.
 
-#### Business Questions
-- Which Category is Best Selling and Most Profitable?
-- What are the Best Selling and Most Profitable Sub-Category?
-- Which is the Top Selling Sub-Category?
-- Which Customer Segment is Most Profitable?
-- Which is the Preferred Ship Mode?
-- Which Region is the Most Profitable?
-- Which City has the Highest Number of Sales?
+#### Methodology
+1. **Data Collection**:
+   - **Setup**: 32 pairs of unfamiliar piglets were observed in two separate pens over a period of 3 days.
+   - **Footage**: Each pair was video recorded for 1 hour daily, totaling 16 hours of footage.
+   - **Selection**: 1.25 hours of video data were selected for the modeling process.
+
+2. **Approach**:
+   - **Datasets**: Four datasets were created:
+     - **Diff1**: Frames skipped every 1 frame.
+     - **Diff5**: Frames skipped every 5 frames.
+     - **Diff10**: Frames skipped every 10 frames.
+     - **Blended**: Multiple image differences combined into a single dataset.
+   - **CNN Models**:
+     - **Model 1**: Standard VGG-16 architecture with convolutional, max-pooling, dense, and dropout layers.
+     - **Model 2**: Enhanced VGG-16 with additional stacked convolutional layers.
+
+3. **Evaluation**:
+   - **Activation Function**: Nine sigmoid activation thresholds between 0.1 and 1.0 were tested, with 0.5 selected for final evaluation.
+   - **Metrics**: Accuracy, precision, recall, and area under the curve (AUC) were calculated.
+   - **Performance**: The stacked CNN model achieved:
+     - **Accuracy**: 0.80
+     - **Precision**: 0.80
+     - **Recall**: 0.78
+     - **AUC**: 0.80
+   - **Behavior Classification**:
+     - **Easy to Classify**: Head biting, immobile, and parallel pressing (recall: 0.95, 0.94, 0.91).
+     - **Challenging**: Mounting and mobile non-aggressive behaviors (recall: 0.63, 0.75).
+
+4. **Efficiency**:
+   - **Training Time**: The blended dataset reduced training and validation time by up to 75% compared to Diff1, Diff5, and Diff10 datasets.
+   - **Preprocessing Time**: Reduced by up to 2.3 times in the blended dataset, making it suitable for real-time applications.
 
 #### Tools
-Python for Data Cleaning, Data Transformation, Data Visualisation and Data Analysis
+- **Programming Language**: Python
+- **Libraries**: TensorFlow/Keras for deep learning, OpenCV for image processing
+- **Environment**: Jupyter Notebooks, Google Colab, or local Python environment
 
-#### Posted in
-- [Medium: Exploratory Data Analysis on Super Store](https://medium.com/analytics-vidhya/exploratory-data-analysis-super-store-cb91c37bcb06?source=friends_link&sk=4da79b677c63a8ad63bce6ae84fb5a25)
-- [Kaggle: Sales Analysis on Super Store](https://www.kaggle.com/katiehuangx/sales-analysis-super-store)
+#### Results
+The use of CNNs combined with image differentials has proven to be an effective and computationally efficient method for detecting aggressive behaviors in pigs. The proposed system can be integrated into real-time monitoring systems to improve animal welfare and productivity in swine farming operations.
+
+#### Future Work
+- **Dataset Expansion**: Incorporate more varied datasets with different pig breeds and environments.
+- **Model Enhancement**: Experiment with other CNN architectures and fine-tuning techniques.
+- **Real-time Deployment**: Develop and deploy a user-friendly application for farm integration.
+
+#### Links
+- [Medium: Detecting Aggression in Pigs Using Deep Learning](https://medium.com/analytics-vidhya/detecting-aggression-in-pigs-using-deep-learning)
+- [Kaggle: Pig Aggression Detection Challenge](https://www.kaggle.com/harryaricibasi/pig-aggression-detection)
 
