@@ -1,15 +1,25 @@
-# PigAggression
+# Pig-Aggression-Detector-using-CNN-and-image-differentials
+![image](https://user-images.githubusercontent.com/81607668/127727120-a11f32fa-3042-4773-b54e-fd1a792fff2f.png)
 
-For training: 
-  1. Pre-processor training
-  2. Trainer
- 
-For testing/predicting:
-  1. Pre-processor testing
-  2. Video analysis
+#### Background
+Super Store is a small retail business located in the United States. They sell Furniture, Office Supplies and Technology products and their customers are the mass Consumer, Corporate and Home Offices. The data set contains sales, profit and geographical information of individual orders.
 
-There are 2 pre-processors because the training version saves small (resized) versions of frames, while the testing version saves full size. 
-Full size is required for clear video analysis output. It does not re-extract videos and frames as they are already saved by the training version.
-When using new data, both pre-processors must be run for predicting (though re-training is recommended anyway).
+#### Business Task
+Analyse sales data and determine weak areas and opportunities to boost business growth.
 
-Everything is unified for 1 smooth process in the PigAggressionRecognitionTool
+#### Business Questions
+- Which Category is Best Selling and Most Profitable?
+- What are the Best Selling and Most Profitable Sub-Category?
+- Which is the Top Selling Sub-Category?
+- Which Customer Segment is Most Profitable?
+- Which is the Preferred Ship Mode?
+- Which Region is the Most Profitable?
+- Which City has the Highest Number of Sales?
+
+#### Tools
+Python for Data Cleaning, Data Transformation, Data Visualisation and Data Analysis
+
+#### Posted in
+- [Medium: Exploratory Data Analysis on Super Store](https://medium.com/analytics-vidhya/exploratory-data-analysis-super-store-cb91c37bcb06?source=friends_link&sk=4da79b677c63a8ad63bce6ae84fb5a25)
+- [Kaggle: Sales Analysis on Super Store](https://www.kaggle.com/katiehuangx/sales-analysis-super-store)
+
